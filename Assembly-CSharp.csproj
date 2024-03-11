@@ -54,8 +54,13 @@
      <Folder Include="Assets" />
      <Folder Include="Assets\GameMain" />
      <Folder Include="Assets\LGF\Event" />
+     <Folder Include="Assets\GameMain\Prefabs" />
+     <Folder Include="Assets\GameMain\UI" />
      <Folder Include="Assets\GameMain\Scripts" />
      <Folder Include="Assets\GameMain\Resources" />
+     <Folder Include="Assets\GameMain\Prefabs\Common" />
+     <Folder Include="Assets\GameMain\DataTables" />
+     <Folder Include="Assets\GameMain\Scenes" />
      <Folder Include="Assets\LGF" />
      <Folder Include="Assets\LGF\Res" />
      <Reference Include="UnityEngine">

@@ -1,0 +1,58 @@
+{
+    "Summary": {
+        "YooVersion": "2.1.1",
+        "UnityVersion": "2022.3.14f1",
+        "BuildDate": "2024/3/11 16:16:29",
+        "BuildSeconds": 12,
+        "BuildTarget": 19,
+        "BuildMode": 0,
+        "BuildPipeline": "BuiltinBuildPipeline",
+        "BuildPackageName": "Prefabs",
+        "BuildPackageVersion": "v0.01",
+        "UniqueBundleName": false,
+        "EnableAddressable": true,
+        "LocationToLower": false,
+        "IncludeAssetGUID": false,
+        "IgnoreDefaultType": true,
+        "AutoCollectShaders": true,
+        "EnableSharePackRule": true,
+        "EncryptionClassName": "null",
+        "FileNameStyle": 0,
+        "CompressOption": 2,
+        "DisableWriteTypeTree": false,
+        "IgnoreTypeTreeChanges": true,
+        "AssetFileTotalCount": 1,
+        "MainAssetTotalCount": 1,
+        "AllBundleTotalCount": 1,
+        "AllBundleTotalSize": 3556,
+        "EncryptedBundleTotalCount": 0,
+        "EncryptedBundleTotalSize": 0
+    },
+    "AssetInfos": [
+        {
+            "Address": "BackGround",
+            "AssetPath": "Assets/GameMain/Prefabs/Common/BackGround.prefab",
+            "AssetGUID": "dfcd91ad2ddf8bb49856bf8abf1d767f",
+            "AssetTags": [],
+            "MainBundleName": "assets_gamemain_prefabs_common_background.bundle",
+            "MainBundleSize": 3556,
+            "DependAssets": []
+        }
+    ],
+    "BundleInfos": [
+        {
+            "BundleName": "assets_gamemain_prefabs_common_background.bundle",
+            "FileName": "95c49b877557ed34885cb1ab4b581b53.bundle",
+            "FileHash": "95c49b877557ed34885cb1ab4b581b53",
+            "FileCRC": "07af85bc",
+            "FileSize": 3556,
+            "Encrypted": false,
+            "Tags": [],
+            "DependBundles": [],
+            "AllBuiltinAssets": [
+                "Assets/GameMain/Prefabs/Common/BackGround.prefab"
+            ]
+        }
+    ],
+    "IndependAssets": []
+}

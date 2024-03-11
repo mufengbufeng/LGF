@@ -5,7 +5,7 @@ using UnityEngine;
 public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T _instance;
-    static object singletonLock = new object();
+    static object singletonLock = new();
 
     public static T Instance
     {
@@ -31,6 +31,7 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
+
     public virtual void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -39,4 +40,5 @@ public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
             _instance = this as T;
         }
     }
+    
 }

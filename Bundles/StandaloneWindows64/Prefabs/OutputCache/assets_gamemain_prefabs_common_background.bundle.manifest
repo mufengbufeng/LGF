@@ -1,0 +1,32 @@
+ManifestFileVersion: 0
+CRC: 3352720585
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: bbcf70dd30125d5f1fa435c2f56dbcd9
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 83956254a1bbb466473b89f5c62006ab
+  IncrementalBuildHash:
+    serializedVersion: 2
+    Hash: bbcf70dd30125d5f1fa435c2f56dbcd9
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+SerializeReferenceClassIdentifiers:
+- AssemblyName: UnityEngine.CoreModule
+  ClassName: UnityEngine.Events.PersistentCallGroup
+- AssemblyName: UnityEngine.UI
+  ClassName: UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
+Assets:
+- Assets/GameMain/Prefabs/Common/BackGround.prefab
+Dependencies: []
