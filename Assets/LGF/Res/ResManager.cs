@@ -48,6 +48,13 @@ public class ResManager : MonoSingleton<ResManager>
         YooAssets.SetDefaultPackage(DefaultPackage);
     }
 
+    /// <summary>
+    /// 获取资源包
+    /// </summary>
+    /// <param name="location"></param>
+    /// <param name="packageName"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
     public AssetInfo GetAssetInfo(string location, string packageName = "")
     {
         if (string.IsNullOrEmpty(location))
@@ -58,9 +65,7 @@ public class ResManager : MonoSingleton<ResManager>
         if (string.IsNullOrEmpty(packageName))
         {
             if (_assetInfoDic.TryGetValue(location, out AssetInfo assetInfo))
-            {
                 return assetInfo; // 从缓存中获取
-            }
 
             // 从默认资源包中获取
             assetInfo = YooAssets.GetAssetInfo(location);
@@ -71,24 +76,19 @@ public class ResManager : MonoSingleton<ResManager>
         {
             string key = $"{packageName}/{location}";
             if (_assetInfoDic.TryGetValue(key, out AssetInfo assetInfo))
-            {
                 return assetInfo;
-            }
 
             var package = YooAssets.GetPackage(packageName);
             if (package == null)
-            {
                 throw new Exception($"The package does not exist. Package Name :{packageName}");
-            }
 
             assetInfo = package.GetAssetInfo(location);
             _assetInfoDic[key] = assetInfo;
             return assetInfo;
         }
     }
-    
-    
-    
+
+
     private void OnDestroy()
     {
         YooAssets.Destroy();

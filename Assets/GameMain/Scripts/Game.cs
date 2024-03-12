@@ -14,7 +14,6 @@ public class Game : MonoBehaviour
     private void Awake()
     {
     
-
         eventManager = this.AddComponent<EventManager>();
         resourceManager = this.AddComponent<ResManager>();
     }
