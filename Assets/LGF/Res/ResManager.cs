@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using LGF.Res;
+using UnityEngine;
 using YooAsset;
 
 namespace LGF.Res
@@ -216,7 +217,103 @@ namespace LGF.Res
             return CheckAssetResult.AssetOnDisk;
         }
 
+        /// <summary>
+        ///  获取资源包key
+        /// </summary>
+        /// <param name="location">资源定位地址</param>
+        /// <param name="packageName">资源包名</param>
+        /// <returns>key</returns>
+        private string GetCharacterKey(string location, string packageName = "")
+        {
+            if (string.IsNullOrEmpty(packageName))
+            {
+                return location;
+            }
+
+            return $"{packageName}/{location}";
+        }
+
         #endregion
+
+
+        #region 获取资源句柄
+
+        /// <summary>
+        /// 获取同步资源句柄。
+        /// </summary>
+        /// <param name="location">资源定位地址。</param>
+        /// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
+        /// <typeparam name="T">资源类型。</typeparam>
+        /// <returns>资源句柄。</returns>
+        private AssetHandle GetHandleSync<T>(string location, string packageName = "") where T : UnityEngine.Object
+        {
+            return GetHandleSync(location, typeof(T), packageName);
+        }
+
+        private AssetHandle GetHandleSync(string location, Type assetType, string packageName = "")
+        {
+            if (string.IsNullOrEmpty(packageName))
+            {
+                return YooAssets.LoadAssetSync(location, assetType);
+            }
+
+            var package = YooAssets.GetPackage(packageName);
+            return package.LoadAssetSync(location, assetType);
+        }
+
+        /// <summary>
+        /// 获取异步资源句柄。
+        /// </summary>
+        /// <param name="location">资源定位地址。</param>
+        /// <param name="packageName">指定资源包的名称。不传使用默认资源包</param>
+        /// <typeparam name="T">资源类型。</typeparam>
+        /// <returns>资源句柄。</returns>
+        private AssetHandle GetHandleAsync<T>(string location, string packageName = "") where T : UnityEngine.Object
+        {
+            return GetHandleAsync(location, typeof(T), packageName);
+        }
+
+        private AssetHandle GetHandleAsync(string location, Type assetType, string packageName = "")
+        {
+            if (string.IsNullOrEmpty(packageName))
+            {
+                return YooAssets.LoadAssetAsync(location, assetType);
+            }
+
+            var package = YooAssets.GetPackage(packageName);
+            return package.LoadAssetAsync(location, assetType);
+        }
+
+        #endregion
+
+        public T LoadAsset<T>(string location, string packageName = "") where T : UnityEngine.Object
+        {
+            if (string.IsNullOrEmpty(location))
+            {
+                throw new Exception("location is null or empty !");
+            }
+
+            string assetObjectKey = GetCharacterKey(location, packageName);
+            // TODO: 从缓存中获取
+            AssetHandle handle = GetHandleSync<T>(location, packageName);
+            T ret = handle.AssetObject as T;
+            // TODO: 缓存资源
+            return ret;
+        }
+
+        public GameObject LoadGameObject(string location, string packageName = "")
+        {
+            if (string.IsNullOrEmpty(location))
+            {
+                throw new Exception("location is null or empty !");
+            }
+
+            string assetObjectKey = GetCharacterKey(location, packageName);
+            // TODO 从缓存获取
+            AssetHandle handle = GetHandleSync<GameObject>(location, packageName);
+            // GameObject obj = 
+            return null;
+        }
 
         private void OnDestroy()
         {
