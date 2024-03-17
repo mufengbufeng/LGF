@@ -1,18 +1,19 @@
 using LGF.Event;
+using LGF.Path;
 using LGF.Res;
 using Unity.VisualScripting;
 using UnityEngine;
+using YooAsset;
 
 public class Game : MonoBehaviour
 {
     public static EventManager eventManager;
-    public static ResManager resourceManager;
+    public static ResManager resManager;
 
     private void Awake()
     {
-    
         eventManager = this.AddComponent<EventManager>();
-        resourceManager = this.AddComponent<ResManager>();
+        resManager = this.AddComponent<ResManager>();
     }
 
 
@@ -20,5 +21,11 @@ public class Game : MonoBehaviour
     void Start()
     {
         eventManager.Trigger("InitFinish");
+
+        eventManager.Add("YooAssetInitialized", (message) =>
+        {
+            AssetInfo assetInfo = resManager.GetAssetInfo(PathConfig.GetUIPrefabPath("RootCube.prefab"));
+            Debug.Log(assetInfo.PackageName);
+        });
     }
 }

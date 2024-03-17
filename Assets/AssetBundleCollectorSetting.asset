@@ -13,27 +13,53 @@ MonoBehaviour:
   m_Name: AssetBundleCollectorSetting
   m_EditorClassIdentifier: 
   ShowPackageView: 1
-  ShowEditorAlias: 0
-  UniqueBundleName: 0
+  ShowEditorAlias: 1
+  UniqueBundleName: 1
   Packages:
-  - PackageName: Prefabs
-    PackageDesc: 
+  - PackageName: DefaultPackage
+    PackageDesc: "\u9ED8\u8BA4\u8D44\u6E90\u5305"
     EnableAddressable: 1
     LocationToLower: 0
     IncludeAssetGUID: 0
     IgnoreDefaultType: 1
     AutoCollectShaders: 1
     Groups:
-    - GroupName: Common
+    - GroupName: Material
+      GroupDesc: "\u6750\u8D28"
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/GameMain/Art/Materials/Root
+        CollectorGUID: 0e1f4cda1d42ab141ad3288c81a6998f
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectAll
+        AssetTags: 
+        UserData: 
+    - GroupName: UI
+      GroupDesc: "UI\u8D44\u6E90\u9884\u5236\u4F53"
+      AssetTags: 
+      ActiveRuleName: EnableGroup
+      Collectors:
+      - CollectPath: Assets/GameMain/Art/UIPrefabs/Root
+        CollectorGUID: f78b421d6deb00f478ab8ff4aa6849ac
+        CollectorType: 0
+        AddressRuleName: AddressByFileName
+        PackRuleName: PackDirectory
+        FilterRuleName: CollectPrefab
+        AssetTags: 
+        UserData: 
+    - GroupName: Scene
       GroupDesc: 
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/GameMain/Prefabs/Common
-        CollectorGUID: a94f190dea8fd3640a6bb74e91c12900
+      - CollectPath: Assets/GameMain/Art/Scenes/Root.unity
+        CollectorGUID: 20c316ddb522a2d44b5d5dc2384265ee
         CollectorType: 0
         AddressRuleName: AddressByFileName
-        PackRuleName: PackSeparately
+        PackRuleName: PackDirectory
         FilterRuleName: CollectAll
         AssetTags: 
         UserData: 

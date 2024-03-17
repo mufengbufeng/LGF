@@ -1,6 +1,6 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using LGF.Res;
 using UnityEngine;
 using YooAsset;
 
@@ -47,6 +47,17 @@ namespace LGF.Res
             YooAssets.Initialize();
             DefaultPackage = YooAssets.CreatePackage("DefaultPackage");
             YooAssets.SetDefaultPackage(DefaultPackage);
+            StartCoroutine(InitializeYooAsset());
+        }
+
+        private IEnumerator InitializeYooAsset()
+        {
+            var initParameters = new EditorSimulateModeParameters();
+            var simulateManifestFilePath =
+                EditorSimulateModeHelper.SimulateBuild(EDefaultBuildPipeline.BuiltinBuildPipeline, "DefaultPackage");
+            initParameters.SimulateManifestFilePath = simulateManifestFilePath;
+            yield return DefaultPackage.InitializeAsync(initParameters);
+            Game.eventManager.Trigger("YooAssetInitialized");
         }
 
         #region 获取资源信息
@@ -301,7 +312,7 @@ namespace LGF.Res
             return ret;
         }
 
-        public GameObject LoadGameObject(string location, string packageName = "")
+        public GameObject LoadGameObject(string location, string packageName = "", Transform parent = null)
         {
             if (string.IsNullOrEmpty(location))
             {
@@ -311,8 +322,16 @@ namespace LGF.Res
             string assetObjectKey = GetCharacterKey(location, packageName);
             // TODO 从缓存获取
             AssetHandle handle = GetHandleSync<GameObject>(location, packageName);
-            // GameObject obj = 
-            return null;
+
+            GameObject obj = AssetsReference.Instantiate(handle.AssetObject as GameObject, parent, this).gameObject;
+
+            return obj;
+        }
+
+        public void UnloadAsset(object obj)
+        {
+            if (obj == null) return;
+            // DefaultPackage.TryUnloadUnusedAsset();
         }
 
         private void OnDestroy()
