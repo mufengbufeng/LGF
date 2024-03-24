@@ -34,11 +34,6 @@ namespace LGF.Res
                 _resManager = Game.resManager;
             }
 
-            if (_resManager)
-            {
-                throw new Exception("_resManager is null");
-            }
-
             if (_sourceGameObject != null)
             {
                 _resManager.UnloadAsset(_sourceGameObject);

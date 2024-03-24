@@ -1,0 +1,65 @@
+{
+    "FileVersion": "2.0.0",
+    "EnableAddressable": true,
+    "LocationToLower": false,
+    "IncludeAssetGUID": false,
+    "OutputNameStyle": 0,
+    "BuildPipeline": "BuiltinBuildPipeline",
+    "PackageName": "DefaultPackage",
+    "PackageVersion": "2024-03-17-1058",
+    "AssetList": [
+        {
+            "Address": "RootCubeMaterial",
+            "AssetPath": "Assets/GameMain/Art/Materials/Root/RootCubeMaterial.mat",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "RootCube",
+            "AssetPath": "Assets/GameMain/Art/UIPrefabs/Root/RootCube.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "Root",
+            "AssetPath": "Assets/GameMain/Art/Scenes/Root.unity",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 2
+        }
+    ],
+    "BundleList": [
+        {
+            "BundleName": "defaultpackage_assets_gamemain_art_materials_root.bundle",
+            "UnityCRC": 1920900007,
+            "FileHash": "332077636ce9960c6348398d1f847d05",
+            "FileCRC": "ba27ac6b",
+            "FileSize": 41861,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_assets_gamemain_art_uiprefabs_root.bundle",
+            "UnityCRC": 4128989487,
+            "FileHash": "a080f1a2926feff4fbb0139fdcf1b79c",
+            "FileCRC": "458cbffd",
+            "FileSize": 46232,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_assets_gamemain_art_scenes.bundle",
+            "UnityCRC": 2209191507,
+            "FileHash": "2f56626301f19b102ccff039218764fd",
+            "FileCRC": "3704a4a9",
+            "FileSize": 112848,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        }
+    ]
+}

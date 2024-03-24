@@ -61,15 +61,15 @@
      <Folder Include="Assets\Scenes" />
      <Folder Include="Assets\GameMain\Scripts" />
      <Folder Include="Assets\GameMain\Art\UIImage" />
-     <Folder Include="Assets\GameMain\Art\UI\Root" />
+     <Folder Include="Assets\GameMain\Art\UIPrefabs\Root" />
      <Folder Include="Assets\GameMain\Resources" />
-     <Folder Include="Assets\GameMain\Art\UI" />
+     <Folder Include="Assets\GameMain\Art\UIPrefabs" />
      <Folder Include="Assets\GameMain\Art\Scenes" />
      <Folder Include="Assets\LGF" />
-     <Folder Include="Assets\GameMain\Art\Material\Root" />
+     <Folder Include="Assets\GameMain\Art\Materials\Root" />
      <Folder Include="Assets\LGF\Res" />
      <Folder Include="Assets\LGF\Path" />
-     <Folder Include="Assets\GameMain\Art\Material" />
+     <Folder Include="Assets\GameMain\Art\Materials" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

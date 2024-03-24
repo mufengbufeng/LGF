@@ -1,0 +1,13 @@
+ManifestFileVersion: 0
+CRC: 2877139992
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: defaultpackage_assets_gamemain_art_materials_root.bundle
+      Dependencies: {}
+    Info_1:
+      Name: defaultpackage_assets_gamemain_art_uiprefabs_root.bundle
+      Dependencies: {}
+    Info_2:
+      Name: defaultpackage_assets_gamemain_art_scenes.bundle
+      Dependencies: {}

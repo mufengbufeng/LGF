@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 using YooAsset;
 
@@ -50,6 +52,7 @@ namespace LGF.Res
             StartCoroutine(InitializeYooAsset());
         }
 
+        /*
         private IEnumerator InitializeYooAsset()
         {
             var initParameters = new EditorSimulateModeParameters();
@@ -58,6 +61,29 @@ namespace LGF.Res
             initParameters.SimulateManifestFilePath = simulateManifestFilePath;
             yield return DefaultPackage.InitializeAsync(initParameters);
             Game.eventManager.Trigger("YooAssetInitialized");
+        }
+        */
+
+        private IEnumerator InitializeYooAsset()
+        {
+            // 注意：GameQueryServices.cs 太空战机的脚本类，详细见StreamingAssetsHelper.cs
+            string defaultHostServer = "http://127.0.0.1/CDN/Android/v1.0";
+            string fallbackHostServer = "http://127.0.0.1/CDN/Android/v1.0";
+            var initParameters = new HostPlayModeParameters();
+            initParameters.BuildinQueryServices = new GameQueryServices();
+            initParameters.DecryptionServices = new FileOffsetDecryption();
+            initParameters.RemoteServices = new RemoteServices(defaultHostServer, fallbackHostServer);
+            var initOperation = DefaultPackage.InitializeAsync(initParameters);
+            yield return initOperation;
+
+            if (initOperation.Status == EOperationStatus.Succeed)
+            {
+                Debug.Log("资源包初始化成功！");
+            }
+            else
+            {
+                Debug.LogError($"资源包初始化失败：{initOperation.Error}");
+            }
         }
 
         #region 获取资源信息
@@ -328,6 +354,26 @@ namespace LGF.Res
             return obj;
         }
 
+        public async Task<GameObject> LoadGameObjectAsync(string location, string packageName = "",
+            Transform parent = null)
+        {
+            if (string.IsNullOrEmpty(location))
+            {
+                throw new Exception("location is null or empty !");
+            }
+
+            string assetObjectKey = GetCharacterKey(location, packageName);
+            // TODO 从缓存获取
+            AssetHandle handle = GetHandleAsync<GameObject>(location, packageName);
+
+            handle.WaitForAsyncComplete();
+
+            GameObject obj = AssetsReference.Instantiate(handle.AssetObject as GameObject, parent, this)
+                .gameObject;
+
+            return obj;
+        }
+
         public void UnloadAsset(object obj)
         {
             if (obj == null) return;
@@ -338,5 +384,173 @@ namespace LGF.Res
         {
             YooAssets.Destroy();
         }
+
+
+        /// <summary>
+        /// 远端资源地址查询服务类
+        /// </summary>
+        private class RemoteServices : IRemoteServices
+        {
+            private readonly string _defaultHostServer;
+            private readonly string _fallbackHostServer;
+
+            public RemoteServices(string defaultHostServer, string fallbackHostServer)
+            {
+                _defaultHostServer = defaultHostServer;
+                _fallbackHostServer = fallbackHostServer;
+            }
+
+            string IRemoteServices.GetRemoteMainURL(string fileName)
+            {
+                return $"{_defaultHostServer}/{fileName}";
+            }
+
+            string IRemoteServices.GetRemoteFallbackURL(string fileName)
+            {
+                return $"{_fallbackHostServer}/{fileName}";
+            }
+        }
+
+        private class FileOffsetDecryption : IDecryptionServices
+        {
+            /// <summary>
+            /// 同步方式获取解密的资源包对象
+            /// 注意：加载流对象在资源包对象释放的时候会自动释放
+            /// </summary>
+            AssetBundle IDecryptionServices.LoadAssetBundle(DecryptFileInfo fileInfo, out Stream managedStream)
+            {
+                managedStream = null;
+                return AssetBundle.LoadFromFile(fileInfo.FileLoadPath, fileInfo.ConentCRC, GetFileOffset());
+            }
+
+            /// <summary>
+            /// 异步方式获取解密的资源包对象
+            /// 注意：加载流对象在资源包对象释放的时候会自动释放
+            /// </summary>
+            AssetBundleCreateRequest IDecryptionServices.LoadAssetBundleAsync(DecryptFileInfo fileInfo,
+                out Stream managedStream)
+            {
+                managedStream = null;
+                return AssetBundle.LoadFromFileAsync(fileInfo.FileLoadPath, fileInfo.ConentCRC, GetFileOffset());
+            }
+
+            private static ulong GetFileOffset()
+            {
+                return 32;
+            }
+        }
     }
+}
+
+public class GameQueryServices : IBuildinQueryServices
+{
+    /// <summary>
+    /// 查询内置文件的时候，是否比对文件哈希值
+    /// </summary>
+    public static bool CompareFileCRC = false;
+
+    public bool Query(string packageName, string fileName, string fileCRC)
+    {
+        // 注意：fileName包含文件格式
+        return StreamingAssetsHelper.FileExists(packageName, fileName, fileCRC);
+    }
+}
+
+#if UNITY_EDITOR
+public sealed class StreamingAssetsHelper
+{
+    public static void Init()
+    {
+    }
+
+    public static bool FileExists(string packageName, string fileName, string fileCRC)
+    {
+        string filePath = Path.Combine(Application.streamingAssetsPath, StreamingAssetsDefine.RootFolderName,
+            packageName, fileName);
+        if (File.Exists(filePath))
+        {
+            if (GameQueryServices.CompareFileCRC)
+            {
+                string crc32 = YooAsset.Editor.EditorTools.GetFileCRC32(filePath);
+                return crc32 == fileCRC;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+}
+#else
+public sealed class StreamingAssetsHelper
+{
+    private class PackageQuery
+    {
+        public readonly Dictionary<string, BuildinFileManifest.Element> Elements =
+ new Dictionary<string, BuildinFileManifest.Element>(1000);
+    }
+
+    private static bool _isInit = false;
+    private static readonly Dictionary<string, PackageQuery> _packages = new Dictionary<string, PackageQuery>(10);
+
+    /// <summary>
+    /// 初始化
+    /// </summary>
+    public static void Init()
+    {
+        if (_isInit == false)
+        {
+            _isInit = true;
+
+            var manifest = Resources.Load<BuildinFileManifest>("BuildinFileManifest");
+            if (manifest != null)
+            {
+                foreach (var element in manifest.BuildinFiles)
+                {
+                    if (_packages.TryGetValue(element.PackageName, out PackageQuery package) == false)
+                    {
+                        package = new PackageQuery();
+                        _packages.Add(element.PackageName, package);
+                    }
+                    package.Elements.Add(element.FileName, element);
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// 内置文件查询方法
+    /// </summary>
+    public static bool FileExists(string packageName, string fileName, string fileCRC32)
+    {
+        if (_isInit == false)
+            Init();
+
+        if (_packages.TryGetValue(packageName, out PackageQuery package) == false)
+            return false;
+
+        if (package.Elements.TryGetValue(fileName, out var element) == false)
+            return false;
+
+        if (GameQueryServices.CompareFileCRC)
+        {
+            return element.FileCRC32 == fileCRC32;
+        }
+        else
+        {
+            return true;
+        }
+    }
+}
+#endif
+public class StreamingAssetsDefine
+{
+    /// <summary>
+    /// 根目录名称（保持和YooAssets资源系统一致）
+    /// </summary>
+    public const string RootFolderName = "su";
 }

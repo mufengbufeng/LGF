@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using LGF.Event;
 using LGF.Path;
 using LGF.Res;
@@ -16,16 +17,21 @@ public class Game : MonoBehaviour
         resManager = this.AddComponent<ResManager>();
     }
 
-
-    // Start is called before the first frame update
     void Start()
     {
         eventManager.Trigger("InitFinish");
 
         eventManager.Add("YooAssetInitialized", (message) =>
         {
-            AssetInfo assetInfo = resManager.GetAssetInfo(PathConfig.GetUIPrefabPath("RootCube.prefab"));
-            Debug.Log(assetInfo.PackageName);
+            string path = PathConfig.GetUIPrefabPath("RootCube");
+
+            AssetInfo assetInfo = resManager.GetAssetInfo(path);
+            // GameObject go = resManager.LoadGameObject(path, "", transform);
+            Task<GameObject> go2 = resManager.LoadGameObjectAsync(path, "", transform);
+            go2.ContinueWith(t => { Debug.Log("AAAAAAAAAAAAAAAA"); });
+
+            Debug.Log("aaaa");
+            // Debug.Log(assetInfo.PackageName);
         });
     }
 }

@@ -1,0 +1,65 @@
+{
+    "FileVersion": "2.0.0",
+    "EnableAddressable": true,
+    "LocationToLower": false,
+    "IncludeAssetGUID": false,
+    "OutputNameStyle": 0,
+    "BuildPipeline": "BuiltinBuildPipeline",
+    "PackageName": "DefaultPackage",
+    "PackageVersion": "Simulate",
+    "AssetList": [
+        {
+            "Address": "RootCubeMaterial",
+            "AssetPath": "Assets/GameMain/Art/Materials/Root/RootCubeMaterial.mat",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 0
+        },
+        {
+            "Address": "RootCube",
+            "AssetPath": "Assets/GameMain/Art/UIPrefabs/Root/RootCube.prefab",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 1
+        },
+        {
+            "Address": "Root",
+            "AssetPath": "Assets/GameMain/Art/Scenes/Root.unity",
+            "AssetGUID": "",
+            "AssetTags": [],
+            "BundleID": 2
+        }
+    ],
+    "BundleList": [
+        {
+            "BundleName": "defaultpackage_assets_gamemain_art_materials_root.bundle",
+            "UnityCRC": 0,
+            "FileHash": "322682ac7db480a6e7b2a4a2ad417617",
+            "FileCRC": "00000000",
+            "FileSize": 2206,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_assets_gamemain_art_uiprefabs_root.bundle",
+            "UnityCRC": 0,
+            "FileHash": "f5c5e241ed0d802ce5a3d8a119d24580",
+            "FileCRC": "00000000",
+            "FileSize": 2989,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        },
+        {
+            "BundleName": "defaultpackage_assets_gamemain_art_scenes.bundle",
+            "UnityCRC": 0,
+            "FileHash": "8a55eb010ad96585a70f9981bda8decb",
+            "FileCRC": "00000000",
+            "FileSize": 11068,
+            "Encrypted": false,
+            "Tags": [],
+            "DependIDs": []
+        }
+    ]
+}
