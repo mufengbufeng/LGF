@@ -52,7 +52,6 @@ namespace LGF.Res
             StartCoroutine(InitializeYooAsset());
         }
 
-        /*
         private IEnumerator InitializeYooAsset()
         {
             var initParameters = new EditorSimulateModeParameters();
@@ -62,28 +61,173 @@ namespace LGF.Res
             yield return DefaultPackage.InitializeAsync(initParameters);
             Game.eventManager.Trigger("YooAssetInitialized");
         }
-        */
 
-        private IEnumerator InitializeYooAsset()
+        private IEnumerator InitializeYooAsset1()
         {
             // 注意：GameQueryServices.cs 太空战机的脚本类，详细见StreamingAssetsHelper.cs
-            string defaultHostServer = "http://127.0.0.1/CDN/Android/v1.0";
-            string fallbackHostServer = "http://127.0.0.1/CDN/Android/v1.0";
+            string defaultHostServer = GetHostServerURL();
+            string fallbackHostServer = GetHostServerURL();
+            Debug.Log($"{defaultHostServer}");
             var initParameters = new HostPlayModeParameters();
-            initParameters.BuildinQueryServices = new GameQueryServices();
+
             initParameters.DecryptionServices = new FileOffsetDecryption();
+            initParameters.BuildinQueryServices = new GameQueryServices();
             initParameters.RemoteServices = new RemoteServices(defaultHostServer, fallbackHostServer);
+
             var initOperation = DefaultPackage.InitializeAsync(initParameters);
             yield return initOperation;
 
             if (initOperation.Status == EOperationStatus.Succeed)
             {
                 Debug.Log("资源包初始化成功！");
+                StartCoroutine(UpdatePackageVersion());
             }
             else
             {
                 Debug.LogError($"资源包初始化失败：{initOperation.Error}");
             }
+        }
+
+        private string packageVersion;
+
+        private IEnumerator UpdatePackageVersion()
+        {
+            bool savePackageVersion = false;
+            var operation = DefaultPackage.UpdatePackageVersionAsync(savePackageVersion);
+            yield return operation;
+
+            if (operation.Status == EOperationStatus.Succeed)
+            {
+                //更新成功
+                packageVersion = operation.PackageVersion;
+                yield return StartCoroutine(UpdatePackageManifest());
+
+                Game.eventManager.Trigger("YooAssetInitialized");
+                Debug.Log($"Updated package Version : {packageVersion}");
+            }
+            else
+            {
+                //更新失败
+                Debug.LogError(operation.Error);
+            }
+        }
+
+        private IEnumerator UpdatePackageManifest()
+        {
+            // 更新成功后自动保存版本号，作为下次初始化的版本。
+            // 也可以通过operation.SavePackageVersion()方法保存。
+            bool savePackageVersion = true;
+            var package = YooAssets.GetPackage("DefaultPackage");
+            var operation = package.UpdatePackageManifestAsync(packageVersion, savePackageVersion);
+            yield return operation;
+
+            if (operation.Status == EOperationStatus.Succeed)
+            {
+                Debug.Log("开始下载");
+                StartCoroutine(Download());
+                //更新成功
+            }
+            else
+            {
+                //更新失败
+                Debug.LogError(operation.Error);
+            }
+        }
+
+        IEnumerator Download()
+        {
+            int downloadingMaxNum = 10;
+            int failedTryAgain = 3;
+            var package = YooAssets.GetPackage("DefaultPackage");
+            var downloader = package.CreateResourceDownloader(downloadingMaxNum, failedTryAgain);
+
+            //没有需要下载的资源
+            if (downloader.TotalDownloadCount == 0)
+            {
+                yield break;
+            }
+
+            //需要下载的文件总数和总大小
+            int totalDownloadCount = downloader.TotalDownloadCount;
+            long totalDownloadBytes = downloader.TotalDownloadBytes;
+
+            //注册回调方法
+            downloader.OnDownloadErrorCallback = OnDownloadErrorFunction;
+            downloader.OnDownloadProgressCallback = OnDownloadProgressUpdateFunction;
+            downloader.OnDownloadOverCallback = OnDownloadOverFunction;
+            downloader.OnStartDownloadFileCallback = OnStartDownloadFileFunction;
+
+            //开启下载
+            downloader.BeginDownload();
+            yield return downloader;
+
+            //检测下载结果
+            if (downloader.Status == EOperationStatus.Succeed)
+            {
+                Debug.Log("全部下载成功");
+                //下载成功
+            }
+            else
+            {
+                //下载失败
+            }
+        }
+
+        // 开始下载回调 
+        private void OnStartDownloadFileFunction(string filename, long sizebytes)
+        {
+            Debug.Log("开始下载");
+        }
+
+        private void OnDownloadOverFunction(bool issucceed)
+        {
+            if (issucceed)
+            {
+                Debug.Log("下载成功");
+            }
+            else
+            {
+                Debug.Log("下载失败");
+            }
+        }
+
+        private void OnDownloadProgressUpdateFunction(int totaldownloadcount, int currentdownloadcount,
+            long totaldownloadbytes, long currentdownloadbytes)
+        {
+            Debug.Log($"下载进度：{currentdownloadcount}/{totaldownloadcount}，{currentdownloadbytes}/{totaldownloadbytes}");
+        }
+
+        private void OnDownloadErrorFunction(string filename, string error)
+        {
+            Debug.LogError($"下载失败：{filename}，{error}");
+        }
+
+
+        private string GetHostServerURL()
+        {
+            //string hostServerIP = "http://10.0.2.2"; //安卓模拟器地址
+            string hostServerIP = "http://192.168.31.41:8080/";
+            string appVersion = "v1.0";
+
+#if UNITY_EDITOR
+            if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.Android)
+                return $"{hostServerIP}/CDN/Android/{appVersion}";
+            else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.iOS)
+                return $"{hostServerIP}/CDN/IPhone/{appVersion}";
+            else if (UnityEditor.EditorUserBuildSettings.activeBuildTarget == UnityEditor.BuildTarget.WebGL)
+                return $"{hostServerIP}/CDN/WebGL/{appVersion}";
+            else
+                return $"{hostServerIP}/CDN/PC/{appVersion}";
+#else
+        if (Application.platform == RuntimePlatform.Android)
+            return $"{hostServerIP}/CDN/Android/{appVersion}";
+        else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            return $"{hostServerIP}/CDN/IPhone/{appVersion}";
+        else if (Application.platform == RuntimePlatform.WebGLPlayer)
+            return $"{hostServerIP}/CDN/WebGL/{appVersion}";
+        else
+            return $"{hostServerIP}/CDN/PC/{appVersion}";
+#endif
         }
 
         #region 获取资源信息
@@ -491,7 +635,7 @@ public sealed class StreamingAssetsHelper
     private class PackageQuery
     {
         public readonly Dictionary<string, BuildinFileManifest.Element> Elements =
- new Dictionary<string, BuildinFileManifest.Element>(1000);
+            new Dictionary<string, BuildinFileManifest.Element>(1000);
     }
 
     private static bool _isInit = false;
@@ -516,6 +660,7 @@ public sealed class StreamingAssetsHelper
                         package = new PackageQuery();
                         _packages.Add(element.PackageName, package);
                     }
+
                     package.Elements.Add(element.FileName, element);
                 }
             }
@@ -546,11 +691,29 @@ public sealed class StreamingAssetsHelper
         }
     }
 }
+
 #endif
+
 public class StreamingAssetsDefine
 {
     /// <summary>
     /// 根目录名称（保持和YooAssets资源系统一致）
     /// </summary>
     public const string RootFolderName = "su";
+}
+
+/// <summary>
+/// 内置资源清单
+/// </summary>
+public class BuildinFileManifest : ScriptableObject
+{
+    [Serializable]
+    public class Element
+    {
+        public string PackageName;
+        public string FileName;
+        public string FileCRC32;
+    }
+
+    public List<Element> BuildinFiles = new List<Element>();
 }

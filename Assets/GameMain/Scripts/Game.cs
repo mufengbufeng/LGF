@@ -24,9 +24,8 @@ public class Game : MonoBehaviour
         eventManager.Add("YooAssetInitialized", (message) =>
         {
             string path = PathConfig.GetUIPrefabPath("RootCube");
-
             AssetInfo assetInfo = resManager.GetAssetInfo(path);
-            // GameObject go = resManager.LoadGameObject(path, "", transform);
+            GameObject go = resManager.LoadGameObject(path, "", transform);
             Task<GameObject> go2 = resManager.LoadGameObjectAsync(path, "", transform);
             go2.ContinueWith(t => { Debug.Log("AAAAAAAAAAAAAAAA"); });
 

@@ -1,7 +1,0 @@
-ManifestFileVersion: 0
-CRC: 4163792276
-AssetBundleManifest:
-  AssetBundleInfos:
-    Info_0:
-      Name: assets_gamemain_prefabs_common_background.bundle
-      Dependencies: {}
