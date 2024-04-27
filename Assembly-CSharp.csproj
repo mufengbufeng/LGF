@@ -45,31 +45,41 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\LGF\UI\UIEvent.cs" />
      <Compile Include="Assets\LGF\Event\EventManager.cs" />
+     <Compile Include="Assets\LGF\Event\UIEvent.cs" />
      <Compile Include="Assets\GameMain\Scripts\Game.cs" />
      <Compile Include="Assets\LGF\Path\PathConfig.cs" />
+     <Compile Include="Assets\LGF\UI\UIManager.cs" />
+     <Compile Include="Assets\LGF\UI\IUIRoot.cs" />
      <Compile Include="Assets\GameMain\Scripts\asdf.cs" />
      <Compile Include="Assets\LGF\Singleton.cs" />
      <Compile Include="Assets\LGF\MonoSingleton.cs" />
      <Compile Include="Assets\LGF\Res\CheckAssetResult.cs" />
      <Compile Include="Assets\LGF\Res\ResManager.cs" />
+     <Compile Include="Assets\GameMain\Scripts\UI\TestUI.cs" />
      <Compile Include="Assets\LGF\Res\AssetsRefInfo.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\GameMain" />
      <Folder Include="Assets\LGF\Event" />
+     <Folder Include="Assets\LGF\MVC" />
+     <Folder Include="Assets\GameMain\Art\Prefabs\UI" />
+     <Folder Include="Assets\LGF\UI" />
      <Folder Include="Assets\GameMain\Art" />
      <Folder Include="Assets\Scenes" />
      <Folder Include="Assets\GameMain\Scripts" />
+     <Folder Include="Assets\StreamingAssets" />
      <Folder Include="Assets\GameMain\Art\UIImage" />
-     <Folder Include="Assets\GameMain\Art\UIPrefabs\Root" />
      <Folder Include="Assets\GameMain\Resources" />
-     <Folder Include="Assets\GameMain\Art\UIPrefabs" />
      <Folder Include="Assets\GameMain\Art\Scenes" />
      <Folder Include="Assets\LGF" />
+     <Folder Include="Assets\GameMain\Art\Prefabs\Root" />
+     <Folder Include="Assets\GameMain\Scripts\UI" />
      <Folder Include="Assets\GameMain\Art\Materials\Root" />
      <Folder Include="Assets\LGF\Res" />
      <Folder Include="Assets\LGF\Path" />
      <Folder Include="Assets\GameMain\Art\Materials" />
+     <Folder Include="Assets\GameMain\Art\Prefabs" />
      <Reference Include="UnityEngine">
      <HintPath>C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
      </Reference>

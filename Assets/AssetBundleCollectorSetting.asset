@@ -42,8 +42,8 @@ MonoBehaviour:
       AssetTags: 
       ActiveRuleName: EnableGroup
       Collectors:
-      - CollectPath: Assets/GameMain/Art/UIPrefabs/Root
-        CollectorGUID: f78b421d6deb00f478ab8ff4aa6849ac
+      - CollectPath: Assets/GameMain/Art/Prefabs
+        CollectorGUID: 5f96692f24f63854aaf40d56894e6d40
         CollectorType: 0
         AddressRuleName: AddressByFileName
         PackRuleName: PackDirectory

@@ -28,10 +28,11 @@ namespace LGF.Path
 
         public static string GetUIPrefabPath(string assetName)
         {
-            string assetPath = "";
-            assetPath = $"{_buildinRootPath}/UIPrefabs/{GetFirstWord(assetName)}/{assetName}";
-
-            return assetPath;
+            // string assetPath = "";
+            // assetPath = $"{_buildinRootPath}/UIPrefabs/{GetFirstWord(assetName)}/{assetName}";
+            // Debug.Log(_buildinRootPath);
+            // Debug.Log(_hotfixPath);
+            return assetName;
         }
 
         // 获取大驼峰第一个单词长度

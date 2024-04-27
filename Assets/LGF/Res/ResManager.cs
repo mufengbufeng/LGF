@@ -54,16 +54,14 @@ namespace LGF.Res
 
         private IEnumerator InitializeYooAsset()
         {
+#if UNITY_EDITOR
             var initParameters = new EditorSimulateModeParameters();
             var simulateManifestFilePath =
                 EditorSimulateModeHelper.SimulateBuild(EDefaultBuildPipeline.BuiltinBuildPipeline, "DefaultPackage");
             initParameters.SimulateManifestFilePath = simulateManifestFilePath;
             yield return DefaultPackage.InitializeAsync(initParameters);
             Game.eventManager.Trigger("YooAssetInitialized");
-        }
-
-        private IEnumerator InitializeYooAsset1()
-        {
+#else
             // 注意：GameQueryServices.cs 太空战机的脚本类，详细见StreamingAssetsHelper.cs
             string defaultHostServer = GetHostServerURL();
             string fallbackHostServer = GetHostServerURL();
@@ -86,7 +84,9 @@ namespace LGF.Res
             {
                 Debug.LogError($"资源包初始化失败：{initOperation.Error}");
             }
+# endif
         }
+
 
         private string packageVersion;
 
@@ -482,7 +482,7 @@ namespace LGF.Res
             return ret;
         }
 
-        public GameObject LoadGameObject(string location, string packageName = "", Transform parent = null)
+        public GameObject LoadGameObject(string location, Transform parent = null, string packageName = "")
         {
             if (string.IsNullOrEmpty(location))
             {
