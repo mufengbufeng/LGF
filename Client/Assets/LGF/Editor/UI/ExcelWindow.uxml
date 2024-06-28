@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="SearchElement" style="height: 29px;">
+        <ui:TextField picking-mode="Ignore" label="搜索：" name="SearchField" />
+    </ui:VisualElement>
+    <ui:Button text="生成全部" name="CreateAllBtn" style="height: 24px; width: 556px; max-width: 100%; min-width: 100%; align-items: center; align-self: center;" />
+    <ui:ScrollView name="ScrollRoot" style="height: 505px; display: flex; visibility: visible; overflow: visible; width: 334px; max-width: 95%; min-width: 95%; align-self: center;" />
+</ui:UXML>

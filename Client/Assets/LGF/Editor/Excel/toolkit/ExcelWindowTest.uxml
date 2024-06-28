@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="SearchElement" style="height: 29px;">
+        <ui:TextField picking-mode="Ignore" label="搜索：" name="SearchField" />
+    </ui:VisualElement>
+    <ui:ScrollView name="ScrollRoot" style="height: 421px; display: flex; visibility: visible; overflow: visible; width: 334px; max-width: 95%; min-width: 95%;" />
+</ui:UXML>

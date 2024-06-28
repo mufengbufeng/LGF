@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement name="Item" style="height: 16px; align-items: center; justify-content: flex-end; flex-direction: row-reverse; max-width: 100%; min-width: 100%;">
+        <ui:Button text="打开" display-tooltip-when-elided="true" name="Btn_Open" style="height: 16px; width: 88px; -unity-text-align: middle-center; max-width: 20%; white-space: nowrap; min-width: 20%;" />
+        <ui:Button text="Button" display-tooltip-when-elided="true" name="Btn_Name" style="height: 16px; width: 69px; max-width: 75%; max-height: 100%; min-width: 75%;" />
+    </ui:VisualElement>
+</ui:UXML>
