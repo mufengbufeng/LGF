@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using LGF.Data;
 using LGF.Event;
 using LGF.Res;
