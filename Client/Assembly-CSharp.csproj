@@ -45,6 +45,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\2022.3.14f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\LGF\FSM\FsmBase.cs" />
      <Compile Include="Assets\LGF\Util\Json.cs" />
      <Compile Include="Assets\LGF\UI\UIEvent.cs" />
      <Compile Include="Assets\GameMain\Scripts\UIController\CSynthesis.cs" />
@@ -54,8 +55,11 @@
      <Compile Include="Assets\LGF\Util\PathUtil.cs" />
      <Compile Include="Assets\LGF\Event\UIEvent.cs" />
      <Compile Include="Assets\GameMain\Scripts\Game.cs" />
+     <Compile Include="Assets\LGF\FSM\FsmState.cs" />
      <Compile Include="Assets\LGF\Path\PathConfig.cs" />
+     <Compile Include="Assets\LGF\FSM\FsmManager.cs" />
      <Compile Include="Assets\LGF\UI\UIManager.cs" />
+     <Compile Include="Assets\LGF\FSM\Fsm.cs" />
      <Compile Include="Assets\LGF\Util\FileUtil.cs" />
      <Compile Include="Assets\GameMain\Scripts\Data\ExcelData.cs" />
      <Compile Include="Assets\LGF\UI\UIRoot.cs" />
@@ -67,13 +71,17 @@
      <Compile Include="Assets\GameMain\Scripts\UIModel\MSynthesis.cs" />
      <Compile Include="Assets\GameMain\Scripts\Data\ExcelDataLoader.cs" />
      <Compile Include="Assets\LGF\MonoSingleton.cs" />
+     <Compile Include="Assets\LGF\Base\Variable\GenericVariable.cs" />
      <Compile Include="Assets\LGF\Res\CheckAssetResult.cs" />
      <Compile Include="Assets\LGF\Util\FrameworkUtil.cs" />
      <Compile Include="Assets\LGF\Data\DataManager.cs" />
      <Compile Include="Assets\LGF\Res\ResManager.cs" />
      <Compile Include="Assets\LGF\MVC\LGFModel.cs" />
+     <Compile Include="Assets\LGF\FSM\IFsm.cs" />
      <Compile Include="Assets\GameMain\Scripts\GameEvent.cs" />
+     <Compile Include="Assets\LGF\FSM\IFsmManager.cs" />
      <Compile Include="Assets\LGF\Res\AssetsRefInfo.cs" />
+     <Compile Include="Assets\LGF\Base\Variable\Variable.cs" />
      <Folder Include="Assets" />
      <Folder Include="Assets\LGF\Data" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -86,6 +94,7 @@
      <Folder Include="Assets\GameMain\Scripts\Main" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
      <Folder Include="Assets\GameMain\UIPrefabs" />
+     <Folder Include="Assets\LGF\Base" />
      <Folder Include="Assets\LGF\Plungs" />
      <Folder Include="Assets\TextMesh Pro\Resources\Fonts &amp; Materials" />
      <Folder Include="Assets\GameMain\Art\Material" />
@@ -107,6 +116,7 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <Folder Include="Assets\LGF\FSM" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
@@ -122,6 +132,7 @@
      <Folder Include="Assets\GameMain\Scenes" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
      <Folder Include="Assets\LGF" />
+     <Folder Include="Assets\LGF\Base\Variable" />
      <Folder Include="Assets\GameMain\Scripts\UIModel" />
      <Folder Include="Assets\LGF\MVC" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
